@@ -3,6 +3,15 @@ import { ProductService } from '../models/product-service.model'
 import { Product } from '../models/product.model'
 
 export class ProductHttpService implements ProductService {
+  private static instance: ProductHttpService | null = null
+
+  static createInstance(): ProductHttpService {
+    if (!ProductHttpService.instance) {
+      ProductHttpService.instance = new ProductHttpService()
+    }
+    return ProductHttpService.instance
+  }
+
   private url = 'https://api.escuelajs.co/api/v1/products'
 
   async getAll(): Promise<Product[]> {
